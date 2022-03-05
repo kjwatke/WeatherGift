@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import GooglePlaces
 
 class LocationListViewController: UIViewController {
 
@@ -14,31 +15,28 @@ class LocationListViewController: UIViewController {
 	@IBOutlet weak var tableView: UITableView!
 	
 	var weatherLocations: [WeatherLocation] = []
-	var CELL_ID = "WeatherCell"
+	var selectedLocationIndex = 0
+	let CELL_ID = "WeatherCell"
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
 		tableView.dataSource = self
 		tableView.delegate = self
-		
-		generateDummyData()
 	}
 	
 	
-	func generateDummyData() {
-		let omahaLocation = WeatherLocation(name: "Omaha", latitude: 193.44, longitude: 23.44)
-		let denverLocation = WeatherLocation(name: "Denver", latitude: 220.44, longitude: 190.55)
-		let austinLocation = WeatherLocation(name: "Austin", latitude: 330.45, longitude: 111.44)
-		
-		weatherLocations += [omahaLocation, denverLocation, austinLocation]
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		selectedLocationIndex = tableView.indexPathForSelectedRow!.row
 	}
 	
-	
-	// MARK: - @IBAction methods
+		// MARK: - @IBAction methods
 	
 	@IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
-		print("add button pressed")
+		let autocompleteController = GMSAutocompleteViewController()
+		autocompleteController.delegate = self
+		
+		present(autocompleteController, animated: true, completion: nil)
 	}
 	
 	
@@ -54,7 +52,7 @@ class LocationListViewController: UIViewController {
 			addBarButton.isEnabled = false
 		}
 	}
-	
+
 	
 }
 
@@ -71,7 +69,12 @@ extension LocationListViewController: UITableViewDelegate, UITableViewDataSource
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: CELL_ID, for: indexPath)
-		cell.textLabel?.text = "\(weatherLocations[indexPath.row].name), \(weatherLocations[indexPath.row].longitude), \(weatherLocations[indexPath.row].latitude)"
+		let lat = weatherLocations[indexPath.row].latitude
+		let long = weatherLocations[indexPath.row].longitude
+		
+		cell.textLabel?.text = weatherLocations[indexPath.row].name
+		cell.detailTextLabel?.text = "Lat:\(lat), Long:\(long)"
+		
 		return cell
 	}
 	
@@ -87,6 +90,39 @@ extension LocationListViewController: UITableViewDelegate, UITableViewDataSource
 		weatherLocations.remove(at: indexPath.row)
 		tableView.deleteRows(at: [indexPath], with: .automatic)
 		
+	}
+	
+}
+
+
+extension LocationListViewController: GMSAutocompleteViewControllerDelegate {
+	
+	// Handle the user's selection.
+	func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+		let newLocation = WeatherLocation(name: place.name ?? "unknown", latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
+		weatherLocations.append(newLocation)
+		tableView.reloadData()
+		
+		dismiss(animated: true, completion: nil)
+	}
+	
+	func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
+		// TODO: handle the error.
+		print("Error: ", error.localizedDescription)
+	}
+	
+	// User canceled the operation.
+	func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+		dismiss(animated: true, completion: nil)
+	}
+	
+	// Turn the network activity indicator on and off again.
+	func didRequestAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
+		UIApplication.shared.isNetworkActivityIndicatorVisible = true
+	}
+	
+	func didUpdateAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
+		UIApplication.shared.isNetworkActivityIndicatorVisible = false
 	}
 	
 }

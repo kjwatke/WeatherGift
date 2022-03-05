@@ -17,6 +17,7 @@
 		0AC7049F27D3132900E98E04 /* GoogleMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 0AC7049E27D3132900E98E04 /* GoogleMaps */; };
 		0AC704A127D3132900E98E04 /* GooglePlaces in Frameworks */ = {isa = PBXBuildFile; productRef = 0AC704A027D3132900E98E04 /* GooglePlaces */; };
 		0AC704A327D3163300E98E04 /* APIkeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC704A227D3163300E98E04 /* APIkeys.swift */; };
+		0AC704A527D3AA8700E98E04 /* LocationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC704A427D3AA8700E98E04 /* LocationDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		0AC7049527D2EC9900E98E04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0AC7049B27D2EE4400E98E04 /* WeatherLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLocation.swift; sourceTree = "<group>"; };
 		0AC704A227D3163300E98E04 /* APIkeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIkeys.swift; sourceTree = "<group>"; };
+		0AC704A427D3AA8700E98E04 /* LocationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 				0AC7048727D2EC9800E98E04 /* AppDelegate.swift */,
 				0AC7048927D2EC9800E98E04 /* SceneDelegate.swift */,
 				0AC7048B27D2EC9800E98E04 /* LocationListViewController.swift */,
+				0AC704A427D3AA8700E98E04 /* LocationDetailViewController.swift */,
 				0AC7049B27D2EE4400E98E04 /* WeatherLocation.swift */,
 				0AC704A227D3163300E98E04 /* APIkeys.swift */,
 				0AC7048D27D2EC9800E98E04 /* Main.storyboard */,
@@ -159,6 +162,7 @@
 				0AC7049C27D2EE4400E98E04 /* WeatherLocation.swift in Sources */,
 				0AC704A327D3163300E98E04 /* APIkeys.swift in Sources */,
 				0AC7048827D2EC9800E98E04 /* AppDelegate.swift in Sources */,
+				0AC704A527D3AA8700E98E04 /* LocationDetailViewController.swift in Sources */,
 				0AC7048A27D2EC9800E98E04 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
