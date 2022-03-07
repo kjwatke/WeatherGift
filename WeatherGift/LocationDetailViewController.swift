@@ -46,10 +46,35 @@ class LocationDetailViewController: UIViewController {
 				self.placeLabel.text = self.weatherDetail.name
 				self.temperatureLabel.text = "\(self.weatherDetail.temperature)°"
 				self.summaryLabel.text = self.weatherDetail.summary
+				self.imageView.image = self.setWeatherPhoto(withIcon: self.weatherDetail.dailyIcon)
+				print("iconCode: \(self.weatherDetail.dailyIcon) for location: \(self.weatherDetail.name)")
 			}
 		}
 	}
 
+	
+	func setWeatherPhoto(withIcon icon: String) -> UIImage {
+		switch icon {
+			case "01d":
+				return UIImage(systemName: "sun.max.fill")!
+			case "01n":
+				return UIImage(systemName: "moon.fill")!
+			case "02d", "02n", "03d", "03n", "04d", "04n":
+				return UIImage(systemName: "cloud.fill")!
+			case "09d", "09n", "10d", "10n":
+				return UIImage(systemName: "cloud.heavyrain.fill")!
+			case "11d", "11n":
+				return UIImage(systemName: "cloud.sun.bolt.fill")!
+			case "13d", "13n":
+				return UIImage(systemName: "cloud.snow.fill")!
+			case "50d", "50n":
+				return UIImage(systemName: "cloud.fog.fill")!
+			default:
+				return UIImage(systemName: "sun.max.fill")!
+				
+		}
+	}
+	
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		let destination = segue.destination as! LocationListViewController
