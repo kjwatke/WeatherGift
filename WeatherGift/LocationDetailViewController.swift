@@ -15,7 +15,7 @@ class LocationDetailViewController: UIViewController {
 	@IBOutlet weak var summaryLabel: UILabel!
 	@IBOutlet weak var imageView: UIImageView!
 	
-	var weatherLocation: WeatherLocation!
+	var weatherDetail: WeatherDetail!
 	var locationIndex = 0
 	
 	// MARK: - Lifecycle Methods
@@ -35,11 +35,19 @@ class LocationDetailViewController: UIViewController {
 	func updateUserInterface() {
 		let pageViewController = getRootViewControllerFromScene()
 		
-		weatherLocation = pageViewController.weatherLocations[locationIndex]
-		dateLabel.text = "12/12/1212"
-		placeLabel.text = weatherLocation.name
-		temperatureLabel.text = "52°"
-		summaryLabel.text = "Dummy Text"
+		let weatherLocation = pageViewController.weatherLocations[locationIndex]
+		weatherDetail = WeatherDetail(name: weatherLocation.name, latitude: weatherLocation.latitude, longitude: weatherLocation.longitude)
+		
+		weatherDetail.getData { [weak self] in
+			guard let self = self else { return }
+			
+			DispatchQueue.main.async {
+				self.dateLabel.text = self.weatherDetail.timezone
+				self.placeLabel.text = self.weatherDetail.name
+				self.temperatureLabel.text = "\(self.weatherDetail.temperature)°"
+				self.summaryLabel.text = self.weatherDetail.summary
+			}
+		}
 	}
 
 	
