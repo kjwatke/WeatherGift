@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0AB57B3327D78CE40061C566 /* DailyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB57B3227D78CE40061C566 /* DailyTableViewCell.swift */; };
 		0AC7048827D2EC9800E98E04 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC7048727D2EC9800E98E04 /* AppDelegate.swift */; };
 		0AC7048A27D2EC9800E98E04 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC7048927D2EC9800E98E04 /* SceneDelegate.swift */; };
 		0AC7048C27D2EC9800E98E04 /* LocationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC7048B27D2EC9800E98E04 /* LocationListViewController.swift */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0AB57B3227D78CE40061C566 /* DailyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyTableViewCell.swift; sourceTree = "<group>"; };
 		0AC7048427D2EC9800E98E04 /* WeatherGift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherGift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AC7048727D2EC9800E98E04 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0AC7048927D2EC9800E98E04 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 				0AC7049B27D2EE4400E98E04 /* WeatherLocation.swift */,
 				0AE2FBA627D5935E00ECF4BE /* WeatherDetail.swift */,
 				0AC704A427D3AA8700E98E04 /* LocationDetailViewController.swift */,
+				0AB57B3227D78CE40061C566 /* DailyTableViewCell.swift */,
 				0AC7048B27D2EC9800E98E04 /* LocationListViewController.swift */,
 				0AC704A227D3163300E98E04 /* APIkeys.swift */,
 				0AC7048D27D2EC9800E98E04 /* Main.storyboard */,
@@ -164,6 +167,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0AB57B3327D78CE40061C566 /* DailyTableViewCell.swift in Sources */,
 				0AC7048C27D2EC9800E98E04 /* LocationListViewController.swift in Sources */,
 				0AE2FBA727D5935E00ECF4BE /* WeatherDetail.swift in Sources */,
 				0AE2FB7F27D50A8E00ECF4BE /* PageViewController.swift in Sources */,

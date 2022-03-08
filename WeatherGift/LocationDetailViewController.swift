@@ -20,15 +20,23 @@ class LocationDetailViewController: UIViewController {
 	@IBOutlet weak var temperatureLabel: UILabel!
 	@IBOutlet weak var summaryLabel: UILabel!
 	@IBOutlet weak var imageView: UIImageView!
+	@IBOutlet weak var tableView: UITableView!
 	
 	var weatherDetail: WeatherDetail!
 	var locationIndex = 0
+	var CELL_ID = "DailyWeatherCell"
+	var dailyCellHeight: CGFloat = 80
+
 	
 	// MARK: - Lifecycle Methods
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 	
+		tableView.delegate = self
+		tableView.dataSource = self
+		
+		
 		updateUserInterface()
 	}
 	
@@ -55,9 +63,11 @@ class LocationDetailViewController: UIViewController {
 				self.temperatureLabel.text = "\(self.weatherDetail.temperature)°"
 				self.summaryLabel.text = self.weatherDetail.summary
 				self.imageView.image = UIImage(systemName: self.weatherDetail.dayIcon)
-				print("iconCode: \(self.weatherDetail.dayIcon) for location: \(self.weatherDetail.name)")
+				
+				self.tableView.reloadData()
 			}
 		}
+		
 	}
 	
 	
@@ -81,4 +91,29 @@ class LocationDetailViewController: UIViewController {
 		
 		updateUserInterface()
 	}
+}
+
+
+// MARK: - TableView Delegate and DataSource Methods
+
+extension LocationDetailViewController: UITableViewDelegate, UITableViewDataSource {
+	
+	
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		return weatherDetail.dailyWeatherData.count
+	}
+	
+	
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let cell = tableView.dequeueReusableCell(withIdentifier: CELL_ID, for: indexPath) as! DailyTableViewCell
+		cell.dailyWeather = weatherDetail.dailyWeatherData[indexPath.row]
+		
+		return cell
+	}
+	
+	
+	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		return dailyCellHeight
+	}
+	
 }
