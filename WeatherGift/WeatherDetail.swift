@@ -1,9 +1,9 @@
-//
-//  WeatherDetail.swift
-//  WeatherGift
-//
-//  Created by Kevin Watke on 3/6/22.
-//
+	//
+	//  WeatherDetail.swift
+	//  WeatherGift
+	//
+	//  Created by Kevin Watke on 3/6/22.
+	//
 
 import Foundation
 
@@ -27,6 +27,7 @@ struct DailyWeather {
 	var dailySummary: String
 	var dailyHigh: Int
 	var dailyLow: Int
+	var id: Int
 }
 
 
@@ -34,6 +35,7 @@ struct HourlyWeather {
 	var hour: String
 	var hourlyTemperature: Int
 	var hourlyIcon: String
+	var id: Int
 }
 
 
@@ -58,6 +60,7 @@ class WeatherDetail: WeatherLocation {
 	private struct Weather: Codable {
 		var description: String
 		var icon: String
+		var id: Int
 	}
 	
 	
@@ -111,7 +114,7 @@ class WeatherDetail: WeatherLocation {
 				print("Error: \(error.localizedDescription)")
 			}
 			
-			// Deal with the data
+				// Deal with the data
 			do {
 				print("URL: \(url)")
 				let result = try JSONDecoder().decode(Result.self, from: data!)
@@ -119,23 +122,30 @@ class WeatherDetail: WeatherLocation {
 				self.currentTime = result.current.dt
 				self.temperature = Int(result.current.temp.rounded())
 				self.summary = result.current.weather[0].description
-				self.dayIcon = self.getWeatherString(withIcon: result.current.weather[0].icon)
+				self.dayIcon = WeatherDetail.getWeatherString(
+					withId: result.current.weather[0].id,
+					withIcon: result.current.weather[0].icon
+				)
 				
 				for index in 0..<result.daily.count {
 					let weekdayDate = Date(timeIntervalSince1970: result.daily[index].dt)
 					dateFormatter.timeZone = TimeZone(identifier: result.timezone)
 					let dailyWeekday = dateFormatter.string(from: weekdayDate)
-					let dailyIcon = self.getWeatherString(withIcon: result.daily[index].weather[0].icon)
+					let dailyIcon = WeatherDetail.getWeatherString(
+						withId: result.daily[index].weather[0].id,
+						withIcon: result.daily[index].weather[0].icon
+					)
 					let dailySummary = result.daily[index].weather[0].description
 					let dailyHigh = Int(result.daily[index].temp.max.rounded())
 					let dailyLow = Int(result.daily[index].temp.min.rounded())
-					let dailyWeather = DailyWeather(dailyIcon: dailyIcon, dailyWeekday: dailyWeekday, dailySummary: dailySummary, dailyHigh: dailyHigh, dailyLow: dailyLow)
+					let id = result.daily[index].weather[0].id
+					let dailyWeather = DailyWeather(dailyIcon: dailyIcon, dailyWeekday: dailyWeekday, dailySummary: dailySummary, dailyHigh: dailyHigh, dailyLow: dailyLow, id: id)
 					
 					self.dailyWeatherData.append(dailyWeather)
-	
+					
 				}
 				
-				// Get no more than 24 hours of data
+					// Get no more than 24 hours of data
 				let lastHour = min(24, result.hourly.count)
 				
 				if lastHour > 0 {
@@ -146,10 +156,15 @@ class WeatherDetail: WeatherLocation {
 						let hour = hourFormatter.string(from: hourlyDate)
 						let hourlyIcon = result.hourly[index].weather[0].icon
 						let hourlyTemp = result.hourly[index].temp.rounded()
-						let hourlyWeatherItem = HourlyWeather(hour: hour, hourlyTemperature: Int(hourlyTemp), hourlyIcon: hourlyIcon)
+						let id = result.hourly[index].weather[0].id
+						let hourlyWeatherItem = HourlyWeather(
+							hour: hour,
+							hourlyTemperature: Int(hourlyTemp),
+							hourlyIcon: hourlyIcon,
+							id: id
+						)
 						
 						self.hourlyWeatherData.append(hourlyWeatherItem)
-						print(hourlyWeatherItem)
 					}
 				}
 			} catch  {
@@ -163,24 +178,36 @@ class WeatherDetail: WeatherLocation {
 	}
 	
 	
-	private func getWeatherString(withIcon icon: String) -> String {
-		switch icon {
-			case "01d":
-				return "sun.max.fill"
-			case "01n":
-				return "moon.fill"
-			case "02d", "02n", "03d", "03n", "04d", "04n":
-				return "cloud.fill"
-			case "09d", "09n", "10d", "10n":
-				return "cloud.heavyrain.fill"
-			case "11d", "11n":
-				return "cloud.sun.bolt.fill"
-			case "13d", "13n":
-				return "cloud.snow.fill"
-			case "50d", "50n":
-				 return "cloud.fog.fill"
+	static func getWeatherString(withId id: Int, withIcon icon: String) -> String {
+		switch id {
+			case 200...299:
+				return "cloud.bolt.rain"
+			case 300...399:
+				return "cloud.drizzle"
+			case 500, 501, 520, 521, 531:
+				return "cloud.rain"
+			case 502, 503, 504, 522:
+				return "cloud.heavyrain"
+			case 511, 611...616:
+				return "cloud.sleet"
+			case 600...602, 620...622:
+				return "snow"
+			case 701, 711, 741:
+				return "cloud.fog"
+			case 721:
+				return (icon.hasSuffix("d") ? "sun.haze" : "cloud.fog")
+			case 731, 751, 761, 762:
+				return (icon.hasSuffix("d") ? "sun.dust" : "cloud.fog")
+			case 771:
+				return "wind"
+			case 800:
+				return (icon.hasSuffix("d") ? "sun.max" : "moon")
+			case 801, 802:
+				return (icon.hasSuffix("d") ? "cloud.sun" : "cloud.moon")
+			case 803, 804:
+				return "cloud"
 			default:
-				return "sun.max.fill"
+				return "cloud.sleet"
 		}
 	}
 }
