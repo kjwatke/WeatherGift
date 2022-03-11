@@ -200,6 +200,8 @@ class WeatherDetail: WeatherLocation {
 				return (icon.hasSuffix("d") ? "sun.dust" : "cloud.fog")
 			case 771:
 				return "wind"
+			case 781:
+				return "tornado"
 			case 800:
 				return (icon.hasSuffix("d") ? "sun.max" : "moon")
 			case 801, 802:
