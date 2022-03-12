@@ -34,7 +34,12 @@ class LocationDetailViewController: UIViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+	}
 	
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		
 		tableView.delegate = self
 		tableView.dataSource = self
 		collectionView.delegate = self
@@ -43,6 +48,9 @@ class LocationDetailViewController: UIViewController {
 		
 		updateUserInterface()
 	}
+	
+	
+	// MARK: - Private functions
 	
 	func getRootViewControllerFromScene() -> PageViewController {
 		let scenes = UIApplication.shared.connectedScenes
@@ -124,7 +132,7 @@ extension LocationDetailViewController: UITableViewDelegate, UITableViewDataSour
 }
 
 
-extension LocationDetailViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension LocationDetailViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 	
 	
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -139,4 +147,7 @@ extension LocationDetailViewController: UICollectionViewDataSource, UICollection
 	}
 
 	
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+		return CGSize(width: 70, height: 70)
+	}
 }
