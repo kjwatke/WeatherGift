@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class LocationDetailViewController: UIViewController {
 
@@ -28,6 +29,7 @@ class LocationDetailViewController: UIViewController {
 	var CELL_ID = "DailyWeatherCell"
 	var COLLECTION_CELL_ID = "HourlyCell"
 	var dailyCellHeight: CGFloat = 80
+	var locationManager: CLLocationManager!
 
 	
 	// MARK: - Lifecycle Methods
@@ -45,6 +47,9 @@ class LocationDetailViewController: UIViewController {
 		collectionView.delegate = self
 		collectionView.dataSource = self
 		
+		if locationIndex == 0 {
+			getLocation()
+		}
 		
 		updateUserInterface()
 	}
@@ -150,4 +155,79 @@ extension LocationDetailViewController: UICollectionViewDataSource, UICollection
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 		return CGSize(width: 70, height: 70)
 	}
+}
+
+
+extension LocationDetailViewController: CLLocationManagerDelegate {
+	
+	// Creating a CLLocationManager will automatically check authorization
+	func getLocation() {
+		locationManager = CLLocationManager()
+		locationManager.delegate = self
+		
+	}
+	
+	
+	func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+		print("Checking authentication status.")
+		handleAuthenticalStatus(status: manager.authorizationStatus)
+	}
+	
+	
+	func handleAuthenticalStatus(status: CLAuthorizationStatus) {
+		
+		switch status {
+			case .notDetermined:
+				locationManager.requestWhenInUseAuthorization()
+			case .restricted:
+				self.oneButtonAlert(
+					title: "Location services denied",
+					message: "It may be that parental controls are restricting location use in this app.")
+			case .denied:
+				break
+			case .authorizedAlways, .authorizedWhenInUse:
+				locationManager.requestLocation()
+			case .authorized:
+				break
+			@unknown default:
+				print("Developer alert, unknown status detected: \(status)")
+		}
+	}
+	
+	func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+		
+	}
+	
+	
+	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+		let currentLocation = locations.last ?? CLLocation()
+		let geocoder = CLGeocoder()
+		
+		geocoder.reverseGeocodeLocation(currentLocation) { placemarks, error in
+			var locationName = ""
+			
+			if placemarks != nil {
+				let placemark = placemarks?.last
+				let city = placemark?.locality ?? "Unknown City"
+				let state = placemark?.administrativeArea ?? "Unknown State"
+				
+				locationName = "\(city), \(state)"
+
+			}
+			else {
+				print("Error: Retrieving place. Error code: \(error!)")
+				locationName = "Could not find location"
+			}
+			
+			let pageViewController = self.getRootViewControllerFromScene()
+			
+			pageViewController.weatherLocations[self.locationIndex].latitude = currentLocation.coordinate.latitude
+			pageViewController.weatherLocations[self.locationIndex].longitude = currentLocation.coordinate.longitude
+			pageViewController.weatherLocations[self.locationIndex].name = locationName
+			
+			self.updateUserInterface()
+		}
+	}
+	
+	
 }
