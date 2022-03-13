@@ -1,15 +1,15 @@
-//
-//  LocationListViewController.swift
-//  WeatherGift
-//
-//  Created by Kevin Watke on 3/4/22.
-//
+	//
+	//  LocationListViewController.swift
+	//  WeatherGift
+	//
+	//  Created by Kevin Watke on 3/4/22.
+	//
 
 import UIKit
 import GooglePlaces
 
 class LocationListViewController: UIViewController {
-
+	
 	@IBOutlet weak var editBarButton: UIBarButtonItem!
 	@IBOutlet weak var addBarButton: UIBarButtonItem!
 	@IBOutlet weak var tableView: UITableView!
@@ -66,12 +66,12 @@ class LocationListViewController: UIViewController {
 			addBarButton.isEnabled = false
 		}
 	}
-
+	
 	
 }
 
 
-// MARK: - UITableView Delegate and DataSource methods
+	// MARK: - UITableView Delegate and DataSource methods
 
 extension LocationListViewController: UITableViewDelegate, UITableViewDataSource {
 	
@@ -106,12 +106,29 @@ extension LocationListViewController: UITableViewDelegate, UITableViewDataSource
 		
 	}
 	
+	
+	func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+		return indexPath.row == 0 ? false : true
+		
+	}
+	
+	
+	func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+		return indexPath.row == 0 ? false : true
+		
+	}
+	
+	
+	func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+		return (proposedDestinationIndexPath.row == 0) ? sourceIndexPath : proposedDestinationIndexPath
+	}
+	
 }
 
 
 extension LocationListViewController: GMSAutocompleteViewControllerDelegate {
 	
-	// Handle the user's selection.
+		// Handle the user's selection.
 	func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
 		let newLocation = WeatherLocation(name: place.name ?? "unknown", latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
 		weatherLocations.append(newLocation)
@@ -121,14 +138,14 @@ extension LocationListViewController: GMSAutocompleteViewControllerDelegate {
 	}
 	
 	func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
-		// TODO: handle the error.
+			// TODO: handle the error.
 		print("Error: ", error.localizedDescription)
 	}
 	
-	// User canceled the operation.
+		// User canceled the operation.
 	func wasCancelled(_ viewController: GMSAutocompleteViewController) {
 		dismiss(animated: true, completion: nil)
 	}
-
+	
 	
 }

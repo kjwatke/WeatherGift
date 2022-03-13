@@ -134,6 +134,7 @@ extension LocationDetailViewController: UITableViewDelegate, UITableViewDataSour
 		return dailyCellHeight
 	}
 	
+	
 }
 
 
