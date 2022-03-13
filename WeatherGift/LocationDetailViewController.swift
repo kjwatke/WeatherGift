@@ -90,9 +90,12 @@ class LocationDetailViewController: UIViewController {
 	
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		guard segue.identifier == "ShowList" else { return }
+		
 		let destination = segue.destination as! LocationListViewController
 		let pageViewController = getRootViewControllerFromScene()
 		destination.weatherLocations = pageViewController.weatherLocations
+		
 	}
 	
 	

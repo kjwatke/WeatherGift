@@ -28,7 +28,7 @@ class PageViewController: UIPageViewController {
 		guard let locationsEncoded = UserDefaults.standard.value(forKey: "weatherLocations") as? Data else {
 			print("WARNING: Could not load weatherLocations data from UserDefaults. This would always be the case the first time")
 			// TODO: Get users location and put it here instead of dummy value.
-			weatherLocations.append(WeatherLocation(name: "CURRENT", latitude: 0.0, longitude: 0.0))
+			weatherLocations.append(WeatherLocation(name: "", latitude: 0.0, longitude: 0.0))
 			return
 		}
 		

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A18520F27DD99850043809A /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A18520E27DD99850043809A /* AboutViewController.swift */; };
 		0AB57B3327D78CE40061C566 /* DailyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB57B3227D78CE40061C566 /* DailyTableViewCell.swift */; };
 		0AC0311227DB89FC0028C37D /* HourlyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC0311127DB89FC0028C37D /* HourlyCollectionViewCell.swift */; };
 		0AC0313827DC25B90028C37D /* UIViewController+alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC0313727DC25B90028C37D /* UIViewController+alert.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A18520E27DD99850043809A /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		0AB57B3227D78CE40061C566 /* DailyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyTableViewCell.swift; sourceTree = "<group>"; };
 		0AC0311127DB89FC0028C37D /* HourlyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyCollectionViewCell.swift; sourceTree = "<group>"; };
 		0AC0313727DC25B90028C37D /* UIViewController+alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+alert.swift"; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 				0AB57B3227D78CE40061C566 /* DailyTableViewCell.swift */,
 				0AC0311127DB89FC0028C37D /* HourlyCollectionViewCell.swift */,
 				0AC7048B27D2EC9800E98E04 /* LocationListViewController.swift */,
+				0A18520E27DD99850043809A /* AboutViewController.swift */,
 				0AC704A227D3163300E98E04 /* APIkeys.swift */,
 				0AC7048D27D2EC9800E98E04 /* Main.storyboard */,
 				0AC7049027D2EC9900E98E04 /* Assets.xcassets */,
@@ -179,6 +182,7 @@
 				0AE2FB7F27D50A8E00ECF4BE /* PageViewController.swift in Sources */,
 				0AC7049C27D2EE4400E98E04 /* WeatherLocation.swift in Sources */,
 				0AC704A327D3163300E98E04 /* APIkeys.swift in Sources */,
+				0A18520F27DD99850043809A /* AboutViewController.swift in Sources */,
 				0AC7048827D2EC9800E98E04 /* AppDelegate.swift in Sources */,
 				0AC0313827DC25B90028C37D /* UIViewController+alert.swift in Sources */,
 				0AC704A527D3AA8700E98E04 /* LocationDetailViewController.swift in Sources */,
